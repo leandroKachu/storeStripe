@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :checkout, only: [:create]
   get '/checkout/success', to: 'checkout#success'
 
+  resources :webhooks, only: [:create]
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
