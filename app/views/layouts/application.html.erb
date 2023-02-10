@@ -13,13 +13,21 @@
 
   <body>
     <%= link_to 'Products', products_path %>
-     <h1> To estudando</h1>
-      <div id="payment-request-button">
-        
-  <!-- A Stripe Element will be inserted here. -->
-      
-      </div>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+
+    <h1>Praticando Rails! <-3 </h1>
+
+    <% if current_user %>
+      <%= link_to current_user.email, edit_user_registration_path %>
+      <br>
+      <%= "User id: #{current_user.stripe_customer_id}" %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path %>
+      <%= link_to "Register", new_user_registration_path %>
+    <% end %>
+
     <hr>
+
     <%= yield %>
   </body>
 </html>
