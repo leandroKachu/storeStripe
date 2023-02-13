@@ -16,6 +16,7 @@ class CheckoutController < ApplicationController
             },
             unit_amount: product.price,
           },
+          price: product.stripe_price_id,
           quantity: 1,
         }],
         mode: 'payment',
