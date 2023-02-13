@@ -9,18 +9,11 @@ class CheckoutController < ApplicationController
       @session=Stripe::Checkout::Session.create({
         customer: current_user.stripe_customer_id,
         line_items: [{
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-            },
-            unit_amount: product.price,
-          },
           price: product.stripe_price_id,
           quantity: 1,
         }],
         mode: 'payment',
-        success_url: root_url,
+        success_url: success_url + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: root_url
 
       })
@@ -32,8 +25,13 @@ class CheckoutController < ApplicationController
     end
   end
 
+  def success 
+    @session_with_expand = Stripe::Checkout::Session.retrieve({ id: params[:session_id], expand: ["line_items"]})
+    @session_with_expand.line_items.data.each do |line_item|
+      product = Product.find_by(stripe_product_id: line_item.price.product)
+    end
+  end
 
-
-  def success ;end
+  def cancel;end
 
 end
