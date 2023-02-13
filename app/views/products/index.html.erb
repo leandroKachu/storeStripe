@@ -10,6 +10,7 @@
       <th>ṕrice</th>
       <th>Payment</th>
       <th>sales Count</th>
+      <th>Stripe Product ID:</th>
     </tr>
   </thead>
 
@@ -22,6 +23,7 @@
         <td><%= number_to_currency(product.price/100) %></td>
         <td><%= button_to 'buy now', checkout_index_path, params: {id: product.id}, remote: true%></td>
         <td><%= product.sales_count %></td>
+        <td><%= product.stripe_product_id %> </td>
         <td><%= link_to 'Show', product%></td>
         <td><%= link_to 'edit', edit_product_path(product) %></td>
       </tr>

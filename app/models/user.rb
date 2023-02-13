@@ -8,6 +8,11 @@ class User < ApplicationRecord
     email
   end
 
+  def create_stripe_id
+    response = Stripe::Customer.list({email: email})
+    update(stripe_customer_id: response[:data].first.id)
+  end
+
   after_create do
     binding.pry
     customer = Stripe::Customer.create(email: email)

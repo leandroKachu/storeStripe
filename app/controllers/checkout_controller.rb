@@ -7,6 +7,7 @@ class CheckoutController < ApplicationController
     if params[:id].to_i.positive?
       product = Product.find_by(id:params[:id].to_i)
       @session=Stripe::Checkout::Session.create({
+        customer: current_user.stripe_customer_id,
         line_items: [{
           price_data: {
             currency: 'usd',
